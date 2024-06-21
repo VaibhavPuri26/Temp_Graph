@@ -23,6 +23,17 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// Erase graph data
+app.get('/erase-data', async (req, res) => {
+  try {
+    await Temperature.deleteMany({});
+    res.redirect('/graph');
+  } catch (err) {
+    console.error(err);
+    res.redirect('/graph');
+  }
+});
+
 // Handle temperature submission
 app.post('/add-temperature', async (req, res) => {
   const temperatureValue = parseFloat(req.body.temperature);
